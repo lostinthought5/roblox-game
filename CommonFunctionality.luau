@@ -30,6 +30,8 @@ CommonFunctionality.PlrRoles = {
 		["BubbleEndColor"] = Color3.fromRGB(130, 138, 255),
 	},
 	
+	-- following two are unimplemented 
+
 	["DONOR"] = {
 		["StartColor"] = false, 
 		["EndColor"] = false,
@@ -46,7 +48,7 @@ CommonFunctionality.PlrRoles = {
 		["BubbleColor"] = false,
 	},
 	
-	["BOT"] = {
+	["GUEST"] = {
 		["StartColor"] = Color3.fromRGB(19, 154, 4), 
 		["EndColor"] = Color3.fromRGB(19, 154, 4),
 		["NameColor"] = Color3.fromRGB(19, 154, 4):ToHex(),
