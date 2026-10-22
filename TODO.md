@@ -1,0 +1,16 @@
+# To-do List
+- More settings features
+- The shop UI
+- The time completed and donation leaderboards; grant corresponding roles
+- The shop items (coils... +)
+- Music and additional sounds
+- Complete the stages
+- Fix shift lock when in first person; buggy
+- Add achievements; meet the dev, finish last stage... +
+- Might remove default sounds? Unsure
+- Translations for other languages
+- Custom server messages in chat window
+- Fix UI scaling for different devices
+- Fix settings/shop while in first person bug
+- Game permissions specific to Admin and Owner roles
+- FINAL: confirm no further bugs and optimize code
