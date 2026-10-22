@@ -97,7 +97,7 @@ function CommonFunctionality.GradientEffect(plrTitle, startColor, endColor)
 		local letter = string.sub(plrTitle, i, i)
 		local alpha = (i - 1) / (length - 1)
 
-		local hexColor = startColor:Lerp(endColor, alpha):ToHex() -- lerp calculation returns a color here 
+		local hexColor = startColor:Lerp(endColor, alpha):ToHex() -- lerp calculation returns a hex color here 
 		gradientText = gradientText .. string.format("<font color='#%s'>%s</font>", hexColor, letter)	
 	end
 
