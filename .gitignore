@@ -1,2 +1,3 @@
 aftman.toml
-src/server/server-modules/BADGES.luau
+sourcemap.json
+src/server/server-modules/Badges.luau
