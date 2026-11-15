@@ -44,35 +44,60 @@ local defaultData = {
 	Role = "GUEST",
 }
 
+local function repeatAttempt(plr, callback)
+	local MAX = 3
+	local attempt = 0
+
+	for i = attempt, MAX do
+		local success, plrData = pcall(callback)
+
+		if success then
+			return true, plrData
+		end
+		
+		if attempt < MAX then -- to minimize waiting time
+			task.wait(2)
+		end
+	end
+	
+	return false
+end
+
 function DataStoring.DataRetrieval(plr)
-	local success, plrData = pcall(function()
+	local success, plrData = repeatAttempt(plr, function()
 		return plrDataStore:GetAsync(plr.UserId)
 	end)
+
+
+	if plr.Parent == nil then return end
 	
-	if not success then plr:Kick("Player save file failed to load. Rejoin to prevent data loss!") end
+	if not success then 
+		plr:Kick("Player save file failed to load. Rejoin to prevent data loss!") 
+		return -- crucial, otherwise data is overwritten
+	end
 	if not plrData then
 		plrData = table.clone(defaultData)
 		
 	elseif type(plrData) ~= "table" then
 		plr:Kick("Player save file is corrupted. Rejoin to prevent data loss!")
+		return
 
 	else
 		for key, value in pairs(defaultData) do
-			if plrData[key] == nil then -- if nonexistent
+			if plrData[key] == nil then
 				plrData[key] = value
 				
 			end
 		end
 	end
 
-	print(plrData)
 	DataStoring.AddPlayers(plr, plrData)
 	if plrData["Role"] then plr:SetAttribute("Role", plrData["Role"]) end
 	triggerSpawning:Fire(plr)
 
 end
 
-function DataStoring.DataStore(plr)
+function DataStoring.DataStore(plr) -- saves progress upon leaving
 	if savingFor[plr.UserId] then return end
 	savingFor[plr.UserId] = true
 	
@@ -82,22 +107,14 @@ function DataStoring.DataStore(plr)
 		return 
 	end
 
-	local attempt, max = 0, 3
-	local success
-	
-	repeat
-		success = pcall(function()
-			plrDataStore:SetAsync(plr.UserId, plrData)
-		end)
+	local success = repeatAttempt(plr, function()
+		return plrDataStore:SetAsync(plr.UserId, plrData)
+	end)
 
-		if not success then
-			attempt += 1
-			warn("FAILED TO SAVE DATA x" .. attempt) -- only prints in console in-game
-			task.wait(2)
+	if not success then
+		warn("COULD NOT SAVE DATA FOR: " .. plr.UserId)
+	end
 
-		end
-
-	until success or attempt >= max
 	DataStoring.PlrRemove(plr)
 	savingFor[plr.UserId] = nil
 	
@@ -108,7 +125,7 @@ function DataStoring.EmergencySave()
 	for _, plr in CF.Players:GetPlayers() do
 		dataToSave += 1
 		
-		task.spawn(function() -- multithreads; handles all players in-game
+		task.spawn(function() -- multithreads; handles all players in-game simultaneously
 			DataStoring.DataStore(plr)
 			dataToSave -= 1
 			
