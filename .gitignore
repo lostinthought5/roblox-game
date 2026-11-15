@@ -1,3 +1,2 @@
 aftman.toml
-server-modules/BADGES.luau
-server-modules/ToDoList.luau
+src/server/server-modules/BADGES.luau
