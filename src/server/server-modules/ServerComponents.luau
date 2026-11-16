@@ -1,7 +1,7 @@
 local ServerComponents = {}
 
 local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunctionality"))
-local DS = require(script.Parent.DataStoring)
+local DataStoring = require(script.Parent.DataStoring)
 local sendCurrentStage = CF.ReplicatedStorage:WaitForChild("SendCurrentStage")
 local sendVisualUpdate = CF.ReplicatedStorage:WaitForChild("SendVisualUpdate")
 
@@ -14,7 +14,7 @@ local componentLogic = {
 			local plr = CF.Players:GetPlayerFromCharacter(char)
 			if not plr then return end
 			
-			local plrData = DS.ReadData(plr)
+			local plrData = DataStoring.ReadData(plr)
 			if not plrData then return end
 			
 			local currentPoint = checkpoint
@@ -22,13 +22,13 @@ local componentLogic = {
 			plrsPrevPoints[plr.UserId] = currentPoint
 			
 			local currentNum = CF.NumByCheckpoint[checkpoint]
-			local furthestNum = CF.NumByCheckpoint[CF.CheckpointByName[plrData["FurthestStage"]]]
+			local furthestNum = CF.NumByCheckpoint[CF.CheckpointByName[plrData.FurthestStage]]
 			
 			if currentNum > furthestNum then
-				DS.UpdatePlrData(plr, checkpoint.Name)
+				DataStoring.UpdatePlrData(plr, checkpoint.Name)
 			end
 			
-			DS.UpdatePlrData(plr, nil, checkpoint.Name)
+			DataStoring.UpdatePlrData(plr, nil, checkpoint.Name)
 			sendCurrentStage:FireClient(plr, checkpoint)
 			sendVisualUpdate:FireClient(plr, checkpoint)
 			

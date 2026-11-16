@@ -19,23 +19,23 @@ local animationInfo = {
 
 local screenAnimations = {
 	["GuiAnimation"] = function(frameUI, screenPosition)
-		return CF.TweenService:Create(frameUI, animationInfo["Default"], {Position = screenPosition})
+		return CF.TweenService:Create(frameUI, animationInfo.Default, {Position = screenPosition})
 	end,
 
 	["GradientAnimation"] = function(gradientUI)
-		return CF.TweenService:Create(gradientUI, animationInfo["GradientUI"], {Rotation = 360})
+		return CF.TweenService:Create(gradientUI, animationInfo.GradientUI, {Rotation = 360})
 	end,
 	
 	["BlurAnimation"] = function(blurSize)
-		return CF.TweenService:Create(blurEffect, animationInfo["Default"], {Size = blurSize})
+		return CF.TweenService:Create(blurEffect, animationInfo.Default, {Size = blurSize})
 	end,
 	
 	["FovAnimation"] = function(fovSize)
-		return CF.TweenService:Create(currentCam, animationInfo["Fov"], {FieldOfView = fovSize})
+		return CF.TweenService:Create(currentCam, animationInfo.Fov, {FieldOfView = fovSize})
 	end,
 	
 	["ShiftLockAnimation"] = function(vectorValue)
-		return CF.TweenService:Create(cameraOffset, animationInfo["ShiftLock"], {Value = vectorValue})
+		return CF.TweenService:Create(cameraOffset, animationInfo.ShiftLock, {Value = vectorValue})
 	end,
 }
 
@@ -75,12 +75,13 @@ function VisualEffects.GuiAnimationEffect(frameUI, moveInward)
 	local guiPosition = moveInward and VisualEffects.GuiEndPosition or VisualEffects.GuiStartPosition
 	local DEFAULT_BLUR_SIZE = 0
 	local DEFAULT_FOV_SIZE = 70
+
 	local blurSize = moveInward and 24 or DEFAULT_BLUR_SIZE
 	local fovSize = moveInward and 60 or DEFAULT_FOV_SIZE
 	
-	local guiAnimation = screenAnimations["GuiAnimation"](frameUI, guiPosition)
-	local blurAnimation = screenAnimations["BlurAnimation"](blurSize)
-	local fovAnimation = screenAnimations["FovAnimation"](fovSize)
+	local guiAnimation = screenAnimations.GuiAnimation(frameUI, guiPosition)
+	local blurAnimation = screenAnimations.BlurAnimation(blurSize)
+	local fovAnimation = screenAnimations.FovAnimation(fovSize)
 	
 	guiAnimation:Play()
 	blurAnimation:Play() 
@@ -89,7 +90,7 @@ function VisualEffects.GuiAnimationEffect(frameUI, moveInward)
 
 	local backgroundUI = frameUI:FindFirstChild("SettingsFrame") or frameUI:FindFirstChild("ShopFrame")
 	local gradientUI = backgroundUI:FindFirstChild("UIStroke"):FindFirstChild("UIGradient")
-	local gradientAnimation = screenAnimations["GradientAnimation"](gradientUI)
+	local gradientAnimation = screenAnimations.GradientAnimation(gradientUI)
 
 	if not moveInward then
 		gradientAnimation:Cancel()
@@ -164,7 +165,7 @@ function VisualEffects.ShiftLock(shiftLockEnabled)
 		local camDistance = (currentCam.CFrame.Position - headHeight).Magnitude
 		cameraOffset.Value = Vector3.new(0, 0, camDistance)
 		
-		local shiftAnimation = screenAnimations["ShiftLockAnimation"](Vector3.new(1.75, 0, 10))
+		local shiftAnimation = screenAnimations.ShiftLockAnimation(Vector3.new(1.75, 0, 10))
 		shiftAnimation:Play()
 		
 		local priority = Enum.RenderPriority.Camera.Value + 1
@@ -187,7 +188,7 @@ function VisualEffects.ShiftLock(shiftLockEnabled)
 		end)
 
 		-- tween to a fixed Default position
-		local shiftAnimation = screenAnimations["ShiftLockAnimation"](Vector3.new(0, 0, 12))
+		local shiftAnimation = screenAnimations.ShiftLockAnimation(Vector3.new(0, 0, 12))
 		shiftAnimation:Play()
 	end
 	

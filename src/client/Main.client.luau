@@ -12,40 +12,40 @@ for _, module in moduleFolder:GetChildren() do
 	clientModules[module.Name] = require(module)	
 end
 
-clientModules["ClientComponents"].Initialize()
+clientModules.ClientComponents.Initialize()
 
 local sendVisualUpdate = CF.ReplicatedStorage:WaitForChild("SendVisualUpdate")
 sendVisualUpdate.OnClientEvent:Connect(function(checkpoint)
-	clientModules["VisualEffects"].CheckpointLightToggle(checkpoint)
+	clientModules.VisualEffects.CheckpointLightToggle(checkpoint)
 end)
 
 CF.TextChatService.OnIncomingMessage = function(message)  -- engine callback
-	return clientModules["ChatCustomization"].Restructure(message, "ChatMessage")
+	return clientModules.ChatCustomization.Restructure(message, "ChatMessage")
 end
 
 CF.TextChatService.OnBubbleAdded = function(message)
-	return clientModules["ChatCustomization"].Restructure(message, "TextBubble")
+	return clientModules.ChatCustomization.Restructure(message, "TextBubble")
 end
 
 local sendCurrentStage = CF.ReplicatedStorage:WaitForChild("SendCurrentStage")
 sendCurrentStage.OnClientEvent:Connect(function(currentStage)
-	clientModules["UserInterfaceLogic"].DefaultUI(currentStage)
+	clientModules.UserInterfaceLogic.DefaultUI(currentStage)
 end)
 
 local shiftLockEnabled = false
 CF.UserInputService.InputBegan:Connect(function(input, gameProcessed)
 	if not gameProcessed and input.KeyCode == Enum.KeyCode.LeftShift then
 		shiftLockEnabled = not shiftLockEnabled
-		clientModules["VisualEffects"].ShiftLock(shiftLockEnabled)
+		clientModules.VisualEffects.ShiftLock(shiftLockEnabled)
 		
 	end
 end)
 
 CF.Players.LocalPlayer.CharacterAdded:Connect(function(char)  -- forces shift lock to remain on upon death
-	if clientModules["VisualEffects"].LockActive then
+	if clientModules.VisualEffects.LockActive then
 		char:WaitForChild("Humanoid")
 		char:WaitForChild("HumanoidRootPart")
 
-		clientModules["VisualEffects"].ShiftLock(true)
+		clientModules.VisualEffects.ShiftLock(true)
 	end
 end)

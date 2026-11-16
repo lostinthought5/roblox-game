@@ -17,11 +17,11 @@ function DataStoring.UpdatePlrData(plr, furthestStage, currentStage)  -- argumen
 	if not plrData then return end
 	
 	if furthestStage then
-		plrData["FurthestStage"] = furthestStage
+		plrData.FurthestStage = furthestStage
 	end
 
 	if currentStage then
-		plrData["CurrentStage"] = currentStage
+		plrData.CurrentStage = currentStage
 	end
 end
 
@@ -88,7 +88,7 @@ function DataStoring.DataRetrieval(plr)
 	end
 
 	DataStoring.AddPlayers(plr, plrData)
-	if plrData["Role"] then plr:SetAttribute("Role", plrData["Role"]) end
+	if plrData.Role then plr:SetAttribute("Role", plrData.Role) end
 	triggerSpawning:Fire(plr)
 
 end

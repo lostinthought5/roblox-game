@@ -4,11 +4,11 @@ local DataStoring = require(script.Parent.DataStoring)
 local Spawning = require(script.Parent.Spawning)
 
 local purchaseLogic = {
-	[CF.DevProducts["SkipStageId"]] = function(plr)
+	[CF.DevProducts.SkipStageId] = function(plr)
 		local plrData = DataStoring.ReadData(plr)
 		if not plrData then return Enum.ProductPurchaseDecision.NotProcessedYet end
 
-		local furthestNum = CF.NumByCheckpoint[CF.CheckpointByName[plrData["FurthestStage"]]]
+		local furthestNum = CF.NumByCheckpoint[CF.CheckpointByName[plrData.FurthestStage]]
 		local nextCheckpoint = CF.CheckpointByNum[furthestNum + 1]
 		if nextCheckpoint then
 			DataStoring.UpdatePlrData(plr, nextCheckpoint.Name, nextCheckpoint.Name)
@@ -22,10 +22,10 @@ local purchaseLogic = {
 }
 
 function DevProductPurchases.Purchase(receiptInfo)
-	local plr = CF.Players:GetPlayerByUserId(receiptInfo["PlayerId"])
+	local plr = CF.Players:GetPlayerByUserId(receiptInfo.PlayerId)
 	if not plr then return Enum.ProductPurchaseDecision.NotProcessedYet end  -- in case plr leaves before transaction
 	
-	local productLogic = purchaseLogic[receiptInfo["ProductId"]]
+	local productLogic = purchaseLogic[receiptInfo.ProductId]
 	if productLogic then 
 		return productLogic(plr) 
 	else
@@ -38,12 +38,12 @@ function DevProductPurchases.ConfirmSkippable(plr)
 	local plrData = DataStoring.ReadData(plr)
 		if not plrData then return end
 
-		local furthestNum = CF.NumByCheckpoint[CF.CheckpointByName[plrData["FurthestStage"]]]
+		local furthestNum = CF.NumByCheckpoint[CF.CheckpointByName[plrData.FurthestStage]]
 		local nextCheckpoint = CF.CheckpointByNum[furthestNum + 1]
 
 		if not nextCheckpoint then return end  -- crucial so that players may not purchase if on last stage
 		
-		CF.MarketplaceService:PromptProductPurchase(plr, CF.DevProducts["SkipStageId"])  -- prompts the actual purchase
+		CF.MarketplaceService:PromptProductPurchase(plr, CF.DevProducts.SkipStageId)  -- prompts the actual purchase
 end
 
 return DevProductPurchases

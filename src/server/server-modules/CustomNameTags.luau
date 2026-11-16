@@ -31,8 +31,9 @@ function CustomNameTags.CreateNameTag(plr, char)
 	if plrRole and CF.PlrRoles[plrRole] then
 		local colorData = CF.PlrRoles[plrRole]
 		
-		local gradientRole = CF.GradientEffect(`[{plrRole}]`, colorData["RoleStartColor"], colorData["RoleEndColor"])
-		textLabel.Text = string.format("<b>%s <font color='#%s'>%s</font></b>", gradientRole, colorData["NameColor"], plr.DisplayName)
+		local gradientRole = CF.GradientEffect(`[{plrRole}]`, colorData.RoleStartColor, colorData.RoleEndColor)
+		
+		textLabel.Text = string.format("<b>%s <font color='#%s'>%s</font></b>", gradientRole, colorData.NameColor, plr.DisplayName)
 	else	
 		textLabel.Text = plr.DisplayName
 	end	

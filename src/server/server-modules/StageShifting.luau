@@ -24,8 +24,8 @@ local requestResponses = {
 function StageShifting.ShiftStage(plr, clientRequest)
 	local success = pcall(function()
 		local plrData = DataStoring.ReadData(plr)
-		local currentNum = CF.NumByCheckpoint[CF.CheckpointByName[plrData["CurrentStage"]]]
-		local furthestNum = CF.NumByCheckpoint[CF.CheckpointByName[plrData["FurthestStage"]]]
+		local currentNum = CF.NumByCheckpoint[CF.CheckpointByName[plrData.CurrentStage]]
+		local furthestNum = CF.NumByCheckpoint[CF.CheckpointByName[plrData.FurthestStage]]
 
 		local serverResponse = requestResponses[clientRequest]
 		local requestedPoint = serverResponse(currentNum, furthestNum)

@@ -4,24 +4,24 @@ local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunc
 local chatLogic = {
 	["ChatMessage"] = function(message, plrRole, colorData)
 		local chatProperties = Instance.new("TextChatMessageProperties")
-		local gradientRole = CF.GradientEffect(`[{plrRole}]`, colorData["RoleStartColor"], colorData["RoleEndColor"])
+		local gradientRole = CF.GradientEffect(`[{plrRole}]`, colorData.RoleStartColor, colorData.RoleEndColor)
 		
-		chatProperties.PrefixText = string.format("%s <font color='#%s'>%s</font>", gradientRole, colorData["NameColor"], message.PrefixText)	
-		chatProperties.Text = string.format("<font color='#%s'>%s</font>", colorData["TextColor"], message.Text)
+		chatProperties.PrefixText = string.format("%s <font color='#%s'>%s</font>", gradientRole, colorData.NameColor, message.PrefixText)	
+		chatProperties.Text = string.format("<font color='#%s'>%s</font>", colorData.TextColor, message.Text)
 		
 		return chatProperties	
 	end,
 	
 	["TextBubble"] = function(message, plrRole, colorData)
 		local bubbleProperties = Instance.new("BubbleChatMessageProperties")
-		bubbleProperties.TextColor3 = Color3.fromHex(colorData["TextColor"])
+		bubbleProperties.TextColor3 = Color3.fromHex(colorData.TextColor)
 		bubbleProperties.BackgroundTransparency = 0
 		bubbleProperties.FontFace = Font.fromEnum(Enum.Font.Kalam)
 		bubbleProperties.Text = string.format("<b>%s</b>", message.Text)
 		bubbleProperties.TextSize = 30
 		
 		local gradientUI = Instance.new("UIGradient")
-		gradientUI.Color = ColorSequence.new(colorData["BubbleStartColor"], colorData["BubbleEndColor"])
+		gradientUI.Color = ColorSequence.new(colorData.BubbleStartColor, colorData.BubbleEndColor)
 		gradientUI.Parent = bubbleProperties
 		gradientUI.Rotation = 90
 		

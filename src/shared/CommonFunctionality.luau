@@ -53,8 +53,8 @@ CommonFunctionality.PlrRoles = {
 		["RoleEndColor"] = Color3.fromRGB(144, 131, 196),
 		["NameColor"] = Color3.fromRGB(253, 253, 253):ToHex(),
 		["TextColor"] = Color3.fromRGB(189, 189, 189):ToHex(),
-		["BubbleStartColor"] = Color3.fromRGB(0, 0, 0),
-		["BubbleEndColor"] = Color3.fromRGB(0, 0, 0),
+		["BubbleStartColor"] = Color3.fromRGB(27, 22, 29),
+		["BubbleEndColor"] = Color3.fromRGB(27, 22, 29),
 	}
 }
 

@@ -68,7 +68,7 @@ local componentLogic = {
 			toggleTween:Play()
 			knobTween:Play()
 			
-			local settingToggles = UILogic.ButtonLogic["SettingsGui"]
+			local settingToggles = UILogic.ButtonLogic.SettingsGui
 			local toggleLogic = settingToggles[toggle.Name]
 
 			if toggleLogic then toggleLogic(isEnabled) end

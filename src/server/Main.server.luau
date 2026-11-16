@@ -10,46 +10,46 @@ for _, module in moduleFolder:GetChildren() do
 	serverModules[module.Name] = require(module)
 end
 
-serverModules["ServerComponents"].Initialize()
+serverModules.ServerComponents.Initialize()
 
 CF.Players.PlayerAdded:Connect(function(plr)
-	serverModules["DataStoring"].DataRetrieval(plr)
+	serverModules.DataStoring.DataRetrieval(plr)
 end)
 
 CF.Players.PlayerRemoving:Connect(function(plr)
-	serverModules["DataStoring"].DataStore(plr)
+	serverModules.DataStoring.DataStore(plr)
 end)
 
 local triggerSpawning = CF.ServerStorage:WaitForChild("TriggerSpawning")
 triggerSpawning.Event:Connect(function(plr)
 	if plr.Character then
-		serverModules["CollisionGrouping"].SetCollisionGroup(plr.Character)
-		serverModules["Spawning"].CharSpawning(plr, plr.Character)
-		serverModules["CustomNameTags"].CreateNameTag(plr, plr.Character)
+		serverModules.CollisionGrouping.SetCollisionGroup(plr.Character)
+		serverModules.Spawning.CharSpawning(plr, plr.Character)
+		serverModules.CustomNameTags.CreateNameTag(plr, plr.Character)
 
 	end
 
 	plr.CharacterAdded:Connect(function(char)
-		serverModules["CollisionGrouping"].SetCollisionGroup(char)
-		serverModules["Spawning"].CharSpawning(plr, char)
+		serverModules.CollisionGrouping.SetCollisionGroup(char)
+		serverModules.Spawning.CharSpawning(plr, char)
 		
-		serverModules["CustomNameTags"].CreateNameTag(plr, char)
+		serverModules.CustomNameTags.CreateNameTag(plr, char)
 	end)
 
 end)
 
 local requestStageShift = CF.ReplicatedStorage:WaitForChild("RequestStageShift")
 requestStageShift.OnServerEvent:Connect(function(plr, clientRequest)
-	serverModules["StageShifting"].ShiftStage(plr, clientRequest)
+	serverModules.StageShifting.ShiftStage(plr, clientRequest)
 end)
 
 CF.MarketplaceService.ProcessReceipt = function(receiptInfo)
-	return serverModules["DevProductPurchases"].Purchase(receiptInfo)
+	return serverModules.DevProductPurchases.Purchase(receiptInfo)
 end
 
-game:BindToClose(serverModules["DataStoring"].EmergencySave)
+game:BindToClose(serverModules.DataStoring.EmergencySave)
 
 local requestStageSkip = CF.ReplicatedStorage:WaitForChild("RequestStageSkip")
 requestStageSkip.OnServerEvent:Connect(function(plr) 
-	serverModules["DevProductPurchases"].ConfirmSkippable(plr)
+	serverModules.DevProductPurchases.ConfirmSkippable(plr)
 end)

@@ -6,7 +6,7 @@ function Spawning.CharSpawning(plr, char)
 	local success = pcall(function()
 		local plrData = DataStoring.ReadData(plr)
 		
-		local currentPoint = CF.CheckpointByName[plrData["CurrentStage"]]
+		local currentPoint = CF.CheckpointByName[plrData.CurrentStage]
 		local spawner = currentPoint.Spawner
 
 		char:PivotTo(CFrame.new(spawner.Position + Vector3.new(0, 10, 0)))
