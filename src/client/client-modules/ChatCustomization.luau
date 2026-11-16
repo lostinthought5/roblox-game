@@ -4,7 +4,7 @@ local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunc
 local chatLogic = {
 	["ChatMessage"] = function(message, plrRole, colorData)
 		local chatProperties = Instance.new("TextChatMessageProperties")
-		local gradientRole = CF.GradientEffect(`[{plrRole}]`, colorData["StartColor"], colorData["EndColor"])
+		local gradientRole = CF.GradientEffect(`[{plrRole}]`, colorData["RoleStartColor"], colorData["RoleEndColor"])
 		
 		chatProperties.PrefixText = string.format("%s <font color='#%s'>%s</font>", gradientRole, colorData["NameColor"], message.PrefixText)	
 		chatProperties.Text = string.format("<font color='#%s'>%s</font>", colorData["TextColor"], message.Text)
@@ -41,27 +41,9 @@ function ChatCustomization.Restructure(message, chatComponent)
 
 	end)
 
-	if not success then 
-		print("RESTRUCTURING BUG") 
-		return 
-	end
+	if not success then return end
 	
 	return restructured
-
-	--[[
-	if not message.TextSource then return end
-
-	local plr = CF.Players:GetPlayerByUserId(message.TextSource.UserId)
-	if not plr then return end
-	
-	local plrRole = plr:GetAttribute("Role")
-	if not plrRole or not CF.PlrRoles[plrRole] then return end
-
-	local colorData = CF.PlrRoles[plrRole]
-	local logic = chatLogic[chatComponent]
-	
-	if logic then return logic(message, plrRole, colorData) end
-	]]
 end
 
 return ChatCustomization

@@ -58,10 +58,12 @@ function VisualEffects.PopEffect(button, buttonFrame, sideFrame)
 		local sideFrameScale = sideFrame:FindFirstChild("UIScale")
 		local hoverSound = GameSounds.SoundEffects.ButtonHoverSound
 		if not buttonFrameScale and not sideFrameScale then return end
+
+		local DEFAULT_SCALE_VALUE = 1 
 		
-		buttonFrameScale.Scale = scaleUp and 1.15 or 1
-		sideFrameScale.Scale = scaleUp and 1.05 or 1
-		if buttonFrameScale.Scale ~= 1 then GameSounds.PlaySoundEffect(hoverSound) end
+		buttonFrameScale.Scale = scaleUp and 1.15 or DEFAULT_SCALE_VALUE
+		sideFrameScale.Scale = scaleUp and 1.05 or DEFAULT_SCALE_VALUE
+		if buttonFrameScale.Scale ~= DEFAULT_SCALE_VALUE then GameSounds.PlaySoundEffect(hoverSound) end
 	end
 		
 	button.MouseEnter:Connect(function() scale(true) end)
@@ -71,8 +73,10 @@ end
 
 function VisualEffects.GuiAnimationEffect(frameUI, moveInward)
 	local guiPosition = moveInward and VisualEffects.GuiEndPosition or VisualEffects.GuiStartPosition
-	local blurSize = moveInward and 24 or 0 
-	local fovSize = moveInward and 60 or 70
+	local DEFAULT_BLUR_SIZE = 0
+	local DEFAULT_FOV_SIZE = 70
+	local blurSize = moveInward and 24 or DEFAULT_BLUR_SIZE
+	local fovSize = moveInward and 60 or DEFAULT_FOV_SIZE
 	
 	local guiAnimation = screenAnimations["GuiAnimation"](frameUI, guiPosition)
 	local blurAnimation = screenAnimations["BlurAnimation"](blurSize)
@@ -94,20 +98,20 @@ function VisualEffects.GuiAnimationEffect(frameUI, moveInward)
 		return
 	end
 
-	-- breaks once function is called more than once, need to fix
 	gradientAnimation:Play()
 end
 
 function VisualEffects.HidePlayer(char, isEnabled)
 	local function hideCharDescendants(object)
+		local DEFAULT_TRANSPARENCY = 0
 		if object:IsA("BasePart") then	
-			object.LocalTransparencyModifier = isEnabled and 1 or 0
+			object.LocalTransparencyModifier = isEnabled and 1 or DEFAULT_TRANSPARENCY
 			
 			local nameTag = object:FindFirstChild("CustomNameTag")
 			if nameTag then nameTag.Enabled = not isEnabled end
 
-		elseif object:IsA("Decal") then -- decals don't have the modifier
-			object.Transparency = isEnabled and 1 or 0
+		elseif object:IsA("Decal") then  -- done because decals don't have the modifier
+			object.Transparency = isEnabled and 1 or DEFAULT_TRANSPARENCY
 		end
 	end
 	
@@ -134,9 +138,9 @@ function VisualEffects.ShiftLock(shiftLockEnabled)
 			
 			if VisualEffects.LockActive then
 				local camLook = currentCam.CFrame.LookVector
-				local flatLook = Vector3.new(camLook.X, 0, camLook.Z) -- to maintain a strictly horizontal view
+				local flatLook = Vector3.new(camLook.X, 0, camLook.Z)  -- to maintain a strictly horizontal view
 				
-				if flatLook.Magnitude > 0.001 then -- to prevent a math logic crash
+				if flatLook.Magnitude > 0.001 then  -- to prevent a math logic crash
 					rootPart.CFrame = CFrame.lookAt(rootPart.Position, rootPart.Position + flatLook)
 				end
 
@@ -144,14 +148,14 @@ function VisualEffects.ShiftLock(shiftLockEnabled)
 				local distanceToTarget = (cameraOffset.Value - Vector3.new(0, 0, 12)).Magnitude
 				if distanceToTarget < 0.1 then
 					CF.RunService:UnbindFromRenderStep("UpdateCamera")
-					cameraOffset.Value = Vector3.zero -- Reset for the next toggle
+					cameraOffset.Value = Vector3.zero  -- reset for the next toggle
 					return	
 				end
 			end
 		end
 		
 		CF.UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
-		CF.UserInputService.MouseIconEnabled = false -- hides cursor
+		CF.UserInputService.MouseIconEnabled = false
 		humanoid.AutoRotate = false  -- property forces char to face direction they walk towards
 		
 		local headHeight = rootPart.Position + Vector3.new(0, 1.5, 0)
@@ -172,17 +176,17 @@ function VisualEffects.ShiftLock(shiftLockEnabled)
 		CF.UserInputService.MouseIconEnabled = true
 		humanoid.AutoRotate = true
 		
-		-- Force Roblox's own zoom memory to match 12 studs as needed
+		-- forces max and min zooming to 12 studs
 		localPlr.CameraMinZoomDistance = 12
 		localPlr.CameraMaxZoomDistance = 12
 
-		-- Unlock the zoom after the tween finishes
+		-- resets after tween below finishes playing
 		task.delay(0.25, function()
 			localPlr.CameraMinZoomDistance = 0.5
 			localPlr.CameraMaxZoomDistance = 25
 		end)
 
-		-- Tween to a fixed Default position
+		-- tween to a fixed Default position
 		local shiftAnimation = screenAnimations["ShiftLockAnimation"](Vector3.new(0, 0, 12))
 		shiftAnimation:Play()
 	end

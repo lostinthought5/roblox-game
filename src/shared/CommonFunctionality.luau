@@ -13,8 +13,8 @@ CommonFunctionality.Players = game:GetService("Players")
 
 CommonFunctionality.PlrRoles = {
 	["OWNER"] = {
-		["StartColor"] = Color3.fromRGB(255, 80, 83),
-		["EndColor"] = Color3.fromRGB(255, 252, 161),
+		["RoleStartColor"] = Color3.fromRGB(255, 80, 83),
+		["RoleEndColor"] = Color3.fromRGB(255, 252, 161),
 		["NameColor"] = Color3.fromRGB(255, 105, 107):ToHex(),
 		["TextColor"] = Color3.fromRGB(255, 255, 255):ToHex(),
 		["BubbleStartColor"] = Color3.fromRGB(255, 121, 130),
@@ -22,8 +22,8 @@ CommonFunctionality.PlrRoles = {
 	},
 	
 	["ADMIN"] = {
-		["StartColor"] = Color3.fromRGB(130, 255, 245), 
-		["EndColor"] = Color3.fromRGB(130, 138, 255),
+		["RoleStartColor"] = Color3.fromRGB(130, 255, 245), 
+		["RoleEndColor"] = Color3.fromRGB(130, 138, 255),
 		["NameColor"] = Color3.fromRGB(187, 254, 255):ToHex(),
 		["TextColor"] = Color3.fromRGB(255, 255, 255):ToHex(),
 		["BubbleStartColor"] = Color3.fromRGB(158, 235, 229),
@@ -33,32 +33,32 @@ CommonFunctionality.PlrRoles = {
 	-- following two are unimplemented 
 
 	["DONOR"] = {
-		["StartColor"] = false, 
-		["EndColor"] = false,
+		["RoleStartColor"] = false, 
+		["RoleEndColor"] = false,
 		["NameColor"] = false,
 		["TextColor"] = false,
 		["BubbleColor"] = false,
 	},
 	
 	["LEADERBOARD"] = {
-		["StartColor"] = false, 
-		["EndColor"] = false,
+		["RoleStartColor"] = false, 
+		["RoleEndColor"] = false,
 		["NameColor"] = false,
 		["TextColor"] = false,
 		["BubbleColor"] = false,
 	},
 	
 	["GUEST"] = {
-		["StartColor"] = Color3.fromRGB(19, 154, 4), 
-		["EndColor"] = Color3.fromRGB(19, 154, 4),
-		["NameColor"] = Color3.fromRGB(19, 154, 4):ToHex(),
-		["TextColor"] = Color3.fromRGB(140, 140, 140):ToHex(),
-		["BubbleStartColor"] = Color3.fromRGB(19, 154, 4),
-		["BubbleEndColor"] = Color3.fromRGB(102, 62, 12),
+		["RoleStartColor"] = Color3.fromRGB(144, 131, 196),
+		["RoleEndColor"] = Color3.fromRGB(144, 131, 196),
+		["NameColor"] = Color3.fromRGB(253, 253, 253):ToHex(),
+		["TextColor"] = Color3.fromRGB(189, 189, 189):ToHex(),
+		["BubbleStartColor"] = Color3.fromRGB(0, 0, 0),
+		["BubbleEndColor"] = Color3.fromRGB(0, 0, 0),
 	}
 }
 
-CommonFunctionality.DevProducts = {
+CommonFunctionality.DevProducts = {  -- these are in-game purchasables 
 	["SkipStageId"] = 3611264810, 
 }
 
@@ -77,15 +77,14 @@ local function registerCheckpoint(checkpoint)
 	end
 end
 
-function CommonFunctionality.InitializeCheckpoints() -- must run twice if ran on both server and client
+function CommonFunctionality.InitializeCheckpoints()  -- must run twice if ran on both server and client
 	local checkpoints = CommonFunctionality.CollectionService:GetTagged("Checkpoint")
 	
-	-- task.spawn() here?
 	for i, checkpoint in checkpoints do
 		registerCheckpoint(checkpoint)
 	end
 	
-	CommonFunctionality.CollectionService:GetInstanceAddedSignal("Checkpoint"):Connect(registerCheckpoint) -- for client script
+	CommonFunctionality.CollectionService:GetInstanceAddedSignal("Checkpoint"):Connect(registerCheckpoint)  -- for client script
 	
 end
 
@@ -95,9 +94,9 @@ function CommonFunctionality.GradientEffect(plrTitle, startColor, endColor)
 
 	for i = 1, length do
 		local letter = string.sub(plrTitle, i, i)
-		local alpha = (i - 1) / (length - 1)
+		local alpha = (i - 1) / (length - 1)  -- this is a in the linear interpolation formula
 
-		local hexColor = startColor:Lerp(endColor, alpha):ToHex() -- lerp calculation returns a hex color here 
+		local hexColor = startColor:Lerp(endColor, alpha):ToHex()
 		gradientText = gradientText .. string.format("<font color='#%s'>%s</font>", hexColor, letter)	
 	end
 

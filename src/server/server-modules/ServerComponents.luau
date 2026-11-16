@@ -48,6 +48,7 @@ local componentLogic = {
 		local platformTypes = {
 			["SlowPlatform"] = {15, 1},
 		}
+		local DEFAULT = {20, 0.5}
 
 		local platformValues = function()
 			for platformType, values in platformTypes do
@@ -56,7 +57,7 @@ local componentLogic = {
 				end
 			end
 
-			return {20, 0.5} -- default values
+			return DEFAULT
 		end
 
 		platformValues = platformValues()
@@ -70,9 +71,9 @@ local componentLogic = {
 		local endCFrame = waypoint.CFrame
 		local distanceVector = endCFrame.Position - startCFrame.Position
 
-		local travelTime = distanceVector.Magnitude / studsPerSec -- in seconds
+		local travelTime = distanceVector.Magnitude / studsPerSec
 
-		-- velocity vector needed to travel through that distance vector in that time frame
+		-- velocity vector needed to travel through the distance vector in that time frame
 		local forwardVelocity = distanceVector / travelTime
 		local backwardVelocity = -forwardVelocity
 
@@ -104,7 +105,7 @@ function ServerComponents.Initialize()
 	for tag, logic in pairs(componentLogic) do 
 		local components = CF.CollectionService:GetTagged(tag)
 		
-		for _, component in components do -- should be O(n)
+		for _, component in components do
 			task.spawn(logic, component)
 		end 
 		

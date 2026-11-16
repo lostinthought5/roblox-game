@@ -5,17 +5,14 @@ local plrDataStore = dataStoreService:GetDataStore("plrObbyData")
 local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunctionality"))
 local triggerSpawning = CF.ServerStorage:WaitForChild("TriggerSpawning")
 
-local currentPlayers = {} -- of form userID : dataTable
+local currentPlayers = {}  -- of form userID : dataTable
 local savingFor = {}
-
--- data storing incomplete; needs further tweaking REMEMBER
 
 function DataStoring.AddPlayers(plr, plrData)
 	currentPlayers[plr.UserId] = plrData
 end
 
-function DataStoring.UpdatePlrData(plr, furthestStage, currentStage) -- should use a callback instead
-	--arguments must be strings
+function DataStoring.UpdatePlrData(plr, furthestStage, currentStage)  -- arguments must be strings
 	local plrData = currentPlayers[plr.UserId]
 	if not plrData then return end
 	
@@ -37,8 +34,7 @@ function DataStoring.PlrRemove(plr)
 	currentPlayers[plr.UserId] = nil
 end
 
-local defaultData = {
-	-- may add more keys as needed
+local defaultData = {  -- more keys may be added
 	CurrentStage = "Checkpoint1",
 	FurthestStage = "Checkpoint1",
 	Role = "GUEST",
@@ -55,7 +51,7 @@ local function repeatAttempt(plr, callback)
 			return true, plrData
 		end
 		
-		if attempt < MAX then -- to minimize waiting time
+		if attempt < MAX then  -- to minimize waiting time
 			task.wait(2)
 		end
 	end
@@ -73,14 +69,14 @@ function DataStoring.DataRetrieval(plr)
 	
 	if not success then 
 		plr:Kick("Player save file failed to load. Rejoin to prevent data loss!") 
-		return -- crucial, otherwise data is overwritten
+		return  -- crucial, otherwise data is overwritten
 	end
 	if not plrData then
 		plrData = table.clone(defaultData)
 		
 	elseif type(plrData) ~= "table" then
 		plr:Kick("Player save file is corrupted. Rejoin to prevent data loss!")
-		return
+		return  -- same as above
 
 	else
 		for key, value in pairs(defaultData) do
@@ -97,7 +93,7 @@ function DataStoring.DataRetrieval(plr)
 
 end
 
-function DataStoring.DataStore(plr) -- saves progress upon leaving
+function DataStoring.DataStore(plr)  -- saves progress upon leaving
 	if savingFor[plr.UserId] then return end
 	savingFor[plr.UserId] = true
 	
@@ -125,14 +121,14 @@ function DataStoring.EmergencySave()
 	for _, plr in CF.Players:GetPlayers() do
 		dataToSave += 1
 		
-		task.spawn(function() -- multithreads; handles all players in-game simultaneously
+		task.spawn(function()  -- multithreads; handles all players simultaneously
 			DataStoring.DataStore(plr)
 			dataToSave -= 1
 			
 		end)
 	end
 	
-	while dataToSave > 0 do -- necessary, for loop above runs instantaneously
+	while dataToSave > 0 do  -- necessary, for loop above runs instantaneously
 		task.wait(0.5)
 	end
 end

@@ -12,7 +12,6 @@ local requestResponses = {
 	
 	["nextRequest"] = function(currentNum, furthestNum)
 		local requestedPoint = CF.CheckpointByNum[currentNum + 1]
-		-- conditional to check if stage is lower than their furthest stage
 
 		if requestedPoint and CF.NumByCheckpoint[requestedPoint] <= furthestNum then
 			return requestedPoint

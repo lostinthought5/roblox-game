@@ -3,18 +3,17 @@ local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunc
 
 function CustomNameTags.CreateNameTag(plr, char)
 	local humanoid = char:WaitForChild("Humanoid")
-	humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None -- disables default engine nametag
+	humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None  -- disables default nametag
 
 	local head = char:WaitForChild("Head")
 	local rootPart = char:WaitForChild("HumanoidRootPart")
 	local billboard = Instance.new("BillboardGui")
-	billboard.Name = "CustomNameTag"
 	billboard.Size = UDim2.new(0, 200, 0, 40)
 	
 	local mag = (head.CFrame.Position - rootPart.CFrame.Position).Magnitude 
 	
-	billboard.StudsOffset = Vector3.new(0, mag + 1.75, 0) -- Hovers slightly above the head
-	billboard.Adornee = rootPart -- not head to prevent GUI movement
+	billboard.StudsOffset = Vector3.new(0, mag + 1.75, 0)  -- hovers slightly above the head
+	billboard.Adornee = rootPart  -- to prevent GUI movement
 	billboard.MaxDistance = 20
 	billboard.Parent = rootPart
 	
@@ -31,7 +30,7 @@ function CustomNameTags.CreateNameTag(plr, char)
 	if plrRole and CF.PlrRoles[plrRole] then
 		local colorData = CF.PlrRoles[plrRole]
 		
-		local gradientRole = CF.GradientEffect(`[{plrRole}]`, colorData["StartColor"], colorData["EndColor"])
+		local gradientRole = CF.GradientEffect(`[{plrRole}]`, colorData["RoleStartColor"], colorData["RoleEndColor"])
 		textLabel.Text = string.format("<b>%s <font color='#%s'>%s</font></b>", gradientRole, colorData["NameColor"], plr.DisplayName)
 	else	
 		textLabel.Text = plr.DisplayName

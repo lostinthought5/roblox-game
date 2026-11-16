@@ -12,17 +12,7 @@ function Spawning.CharSpawning(plr, char)
 		char:PivotTo(CFrame.new(spawner.Position + Vector3.new(0, 10, 0)))
 	end)
 
-	if not success then return end -- incomplete
-	--[[
-	local plrData = DataStoring.ReadData(plr)
-	
-	local checkpoint = CF.CheckpointByName[plrData["CurrentStage"
-	if not checkpoint then return end
-	
-	local spawner = checkpoint.Spawner
-	char:PivotTo(CFrame.new(spawner.Position + Vector3.new(0, 10, 0)))
-	]]
-
+	if not success then return end
 end
 
 return Spawning

@@ -59,7 +59,6 @@ local componentLogic = {
 		toggle.MouseButton1Click:Connect(function()
 			isEnabled = not isEnabled
 			
-			-- following function as ternary operators; logic trick
 			local targetColor = isEnabled and onColor or offColor
 			local targetPosition = isEnabled and onPosition or offPosition
 			
@@ -71,7 +70,7 @@ local componentLogic = {
 			
 			local settingToggles = UILogic.ButtonLogic["SettingsGui"]
 			local toggleLogic = settingToggles[toggle.Name]
-			-- might need to change later
+
 			if toggleLogic then toggleLogic(isEnabled) end
 			
 		end)
@@ -83,6 +82,7 @@ local componentLogic = {
 			["BouncePad2"] = 150,
 		}
 		
+		local DEFAULT_DISPLACEMENT = 100
 		local displacement = function()
 			for padType, displacementAmount in alternateTypes do
 				if bouncePad:HasTag(padType) then
@@ -91,7 +91,7 @@ local componentLogic = {
 				end
 			end
 						
-			return 100 -- default
+			return DEFAULT_DISPLACEMENT
 		end
 		
 		displacement = displacement()
@@ -103,7 +103,7 @@ local componentLogic = {
 			local rootPart = char:FindFirstChild("HumanoidRootPart")
 			local padSound = GameSounds.SoundEffects.BouncePadSound
 			
-			if char ~= localPlr.Character then return end -- must be local plr specifically, will otherwise bug for others
+			if char ~= localPlr.Character then return end  -- must be local plr specifically, will otherwise bug for others
 			if humanoid and rootPart and not debounce then
 				debounce = true
 				GameSounds.PlaySoundEffect(padSound)
@@ -120,7 +120,7 @@ function ClientComponents.Initialize()
 	for tag, logic in pairs(componentLogic) do 
 		local components = CF.CollectionService:GetTagged(tag)
 
-		for _, component in components do -- should be O(n)
+		for _, component in components do  -- should still be constant time
 			task.spawn(logic, component)
 		end 
 

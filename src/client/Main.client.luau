@@ -19,7 +19,7 @@ sendVisualUpdate.OnClientEvent:Connect(function(checkpoint)
 	clientModules["VisualEffects"].CheckpointLightToggle(checkpoint)
 end)
 
-CF.TextChatService.OnIncomingMessage = function(message) -- engine callback
+CF.TextChatService.OnIncomingMessage = function(message)  -- engine callback
 	return clientModules["ChatCustomization"].Restructure(message, "ChatMessage")
 end
 
@@ -29,7 +29,7 @@ end
 
 local sendCurrentStage = CF.ReplicatedStorage:WaitForChild("SendCurrentStage")
 sendCurrentStage.OnClientEvent:Connect(function(currentStage)
-	clientModules["UserInterfaceLogic"].DefaultUI(currentStage) -- could use a more specialized function instead
+	clientModules["UserInterfaceLogic"].DefaultUI(currentStage)
 end)
 
 local shiftLockEnabled = false
@@ -41,7 +41,7 @@ CF.UserInputService.InputBegan:Connect(function(input, gameProcessed)
 	end
 end)
 
-CF.Players.LocalPlayer.CharacterAdded:Connect(function(char) -- handles respawn bug for shift lock, should probably move
+CF.Players.LocalPlayer.CharacterAdded:Connect(function(char)  -- forces shift lock to remain on upon death
 	if clientModules["VisualEffects"].LockActive then
 		char:WaitForChild("Humanoid")
 		char:WaitForChild("HumanoidRootPart")

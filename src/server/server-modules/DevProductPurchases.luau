@@ -16,7 +16,6 @@ local purchaseLogic = {
 
 			return Enum.ProductPurchaseDecision.PurchaseGranted
 		else
-			warn("transaction not handled") -- could add a server text messege here instead 
 			return Enum.ProductPurchaseDecision.NotProcessedYet
 		end
 	end,
@@ -24,13 +23,12 @@ local purchaseLogic = {
 
 function DevProductPurchases.Purchase(receiptInfo)
 	local plr = CF.Players:GetPlayerByUserId(receiptInfo["PlayerId"])
-	if not plr then return Enum.ProductPurchaseDecision.NotProcessedYet end -- in case plr leaves before transaction
+	if not plr then return Enum.ProductPurchaseDecision.NotProcessedYet end  -- in case plr leaves before transaction
 	
 	local productLogic = purchaseLogic[receiptInfo["ProductId"]]
 	if productLogic then 
 		return productLogic(plr) 
 	else
-		warn("product nonexistent")
 		return Enum.ProductPurchaseDecision.NotProcessedYet
 	end
 	

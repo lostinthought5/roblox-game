@@ -1,10 +1,7 @@
--- game:GetService("DataStoreService"):GetDataStore("plrObbyData"):RemoveAsync(10783656763)
 local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunctionality"))
 CF.InitializeCheckpoints()
 
 local serverScriptService = game:GetService("ServerScriptService")
-local startPlrs = game:GetService("StarterPlayer")
-print(startPlrs.EnableMouseLockOption)
 
 local serverModules = {}
 local moduleFolder = serverScriptService:FindFirstChild("server-modules")
@@ -36,7 +33,6 @@ triggerSpawning.Event:Connect(function(plr)
 		serverModules["CollisionGrouping"].SetCollisionGroup(char)
 		serverModules["Spawning"].CharSpawning(plr, char)
 		
-		-- testing code below
 		serverModules["CustomNameTags"].CreateNameTag(plr, char)
 	end)
 

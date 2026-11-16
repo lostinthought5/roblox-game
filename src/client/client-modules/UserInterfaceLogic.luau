@@ -19,18 +19,17 @@ local stageCounter = defaultGui:WaitForChild("StageCounterFrame")
 local hideEnabled = false
 local shiftLockEnabled = false
 
-UserInterfaceLogic.ButtonLogic = { -- used to assign button functionality
+UserInterfaceLogic.ButtonLogic = {
 	["DefaultGui"] = {
 		["SettingsButton"] = function()
 			defaultGui.Enabled = false
 			settingsGui.Enabled = true
-			settingsGuiFrame.Position = VisualEffects.GuiStartPosition -- this is to reset UI position, by default it is set to middle of the screen for editing 
+			settingsGuiFrame.Position = VisualEffects.GuiStartPosition  -- this is to reset UI position, by default it is set to middle of the screen for editing 
 			
 			VisualEffects.GuiAnimationEffect(settingsGuiFrame, true)
 		end,
 		
 		["ShopButton"] = function()
-			-- may need tweaking, if client-side then perhaps hackers can get items easily
 			defaultGui.Enabled = false
 			shopGui.Enabled = true
 			shopGuiFrame.Position = VisualEffects.GuiStartPosition
@@ -53,7 +52,6 @@ UserInterfaceLogic.ButtonLogic = { -- used to assign button functionality
 		["ShiftLock"] = function()
 			shiftLockEnabled = not shiftLockEnabled
 			VisualEffects.ShiftLock(shiftLockEnabled)
-			
 		end,
 	},
 	
@@ -63,7 +61,6 @@ UserInterfaceLogic.ButtonLogic = { -- used to assign button functionality
 			
 			settingsGui.Enabled = false
 			defaultGui.Enabled = true
-			
 		end,
 		
 		["HidePlayersToggle"] = function(isEnabled)
@@ -89,13 +86,10 @@ UserInterfaceLogic.ButtonLogic = { -- used to assign button functionality
 }
 
 function UserInterfaceLogic.DefaultUI(currentStage)
-	stageCounter.StageText.Text = "Stage " .. CF.NumByCheckpoint[currentStage] -- could do this in a more specialized function instead
-	-- stageCounter.StageText.ShadowText.Text = "Stage " .. CF.NumByCheckpoint[currentStage]	
+	stageCounter.StageText.Text = "Stage " .. CF.NumByCheckpoint[currentStage]
 end
 
--- will change following code
-
-CF.Players.PlayerAdded:Connect(function(plr) -- to consider any subsequent players after localPlr
+CF.Players.PlayerAdded:Connect(function(plr)  -- to consider any subsequent players after localPlr
 	plr.CharacterAdded:Connect(function(char)
 		if hideEnabled then
 			VisualEffects.HidePlayer(char, true)
