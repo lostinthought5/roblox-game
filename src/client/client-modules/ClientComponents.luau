@@ -17,7 +17,7 @@ local componentLogic = {
 			shiftFrame:Destroy() -- done because keyboard users don't need the button
 			
 			rightSideFrame.Size = UDim2.new(rightSideFrame.Size.X,  -- halves the vertical sizing of the frame; also affects horizontal because of the aspect ratio
-								UDim.new(skipFrame.Size.Y.Scale / 2, rightSideFrame.Size.Y.Offset))
+								UDim.new(rightSideFrame.Size.Y.Scale / 2, rightSideFrame.Size.Y.Offset))
 			
 			rightSideFrame.UIAspectRatioConstraint.AspectRatio *= 2 -- doubles the affected horizontal
 
@@ -40,13 +40,7 @@ local componentLogic = {
 					if gui and button:IsDescendantOf(gui) then
 						local buttonLogic = logicTable[button.Name]
 						
-						if buttonLogic then
-							buttonLogic()
-						else
-							warn("undefined functionality")
-						end
-						
-						break
+						if buttonLogic then buttonLogic() end
 					end
 			end
 		end)
