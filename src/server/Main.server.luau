@@ -52,3 +52,8 @@ CF.MarketplaceService.ProcessReceipt = function(receiptInfo)
 end
 
 game:BindToClose(serverModules["DataStoring"].EmergencySave)
+
+local requestStageSkip = CF.ReplicatedStorage:WaitForChild("RequestStageSkip")
+requestStageSkip.OnServerEvent:Connect(function(plr) 
+	serverModules["DevProductPurchases"].ConfirmSkippable(plr)
+end)

@@ -16,7 +16,7 @@ local purchaseLogic = {
 
 			return Enum.ProductPurchaseDecision.PurchaseGranted
 		else
-			print("transaction not handled") -- could add a server text messege here instead 
+			warn("transaction not handled") -- could add a server text messege here instead 
 			return Enum.ProductPurchaseDecision.NotProcessedYet
 		end
 	end,
@@ -34,6 +34,18 @@ function DevProductPurchases.Purchase(receiptInfo)
 		return Enum.ProductPurchaseDecision.NotProcessedYet
 	end
 	
+end
+
+function DevProductPurchases.ConfirmSkippable(plr)
+	local plrData = DataStoring.ReadData(plr)
+		if not plrData then return end
+
+		local furthestNum = CF.NumByCheckpoint[CF.CheckpointByName[plrData["FurthestStage"]]]
+		local nextCheckpoint = CF.CheckpointByNum[furthestNum + 1]
+
+		if not nextCheckpoint then return end  -- crucial so that players may not purchase if on last stage
+		
+		CF.MarketplaceService:PromptProductPurchase(plr, CF.DevProducts["SkipStageId"])  -- prompts the actual purchase
 end
 
 return DevProductPurchases

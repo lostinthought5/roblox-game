@@ -2,6 +2,7 @@ local UserInterfaceLogic = {}
 
 local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunctionality"))
 local requestStageShift = CF.ReplicatedStorage:WaitForChild("RequestStageShift")
+local requestStageSkip = CF.ReplicatedStorage:WaitForChild("RequestStageSkip")
 local VisualEffects = require(script.Parent.VisualEffects)
 local localPlr = CF.Players.LocalPlayer
 
@@ -45,8 +46,8 @@ UserInterfaceLogic.ButtonLogic = { -- used to assign button functionality
 			requestStageShift:FireServer("prevRequest")
 		end,
 		
-		["SkipButton"] = function() -- update so that can't be purchased if on last stage
-			CF.MarketplaceService:PromptProductPurchase(localPlr, CF.DevProducts["SkipStageId"])
+		["SkipButton"] = function()
+			requestStageSkip:FireServer()
 		end,
 		
 		["ShiftLock"] = function()
