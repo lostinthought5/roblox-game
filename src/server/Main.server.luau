@@ -13,25 +13,25 @@ end
 serverModules.ServerComponents.Initialize()
 
 CF.Players.PlayerAdded:Connect(function(plr)
-	serverModules.DataStoring.DataRetrieval(plr)
+	serverModules.DataStoring.LoadData(plr)
 end)
 
 CF.Players.PlayerRemoving:Connect(function(plr)
-	serverModules.DataStoring.DataStore(plr)
+	serverModules.DataStoring.SaveData(plr)
 end)
 
 local triggerSpawning = CF.ServerStorage:WaitForChild("TriggerSpawning")
 triggerSpawning.Event:Connect(function(plr)
 	if plr.Character then
 		serverModules.CollisionGrouping.SetCollisionGroup(plr.Character)
-		serverModules.Spawning.CharSpawning(plr, plr.Character)
+		serverModules.Spawning.SpawnCharacter(plr, plr.Character)
 		serverModules.CustomNameTags.CreateNameTag(plr, plr.Character)
 
 	end
 
 	plr.CharacterAdded:Connect(function(char)
 		serverModules.CollisionGrouping.SetCollisionGroup(char)
-		serverModules.Spawning.CharSpawning(plr, char)
+		serverModules.Spawning.SpawnCharacter(plr, char)
 		
 		serverModules.CustomNameTags.CreateNameTag(plr, char)
 	end)
@@ -51,5 +51,5 @@ game:BindToClose(serverModules.DataStoring.EmergencySave)
 
 local requestStageSkip = CF.ReplicatedStorage:WaitForChild("RequestStageSkip")
 requestStageSkip.OnServerEvent:Connect(function(plr) 
-	serverModules.DevProductPurchases.ConfirmSkippable(plr)
+	serverModules.DevProductPurchases.PromptSkipPurchase(plr)
 end)

@@ -85,7 +85,7 @@ UserInterfaceLogic.ButtonLogic = {
 	},
 }
 
-function UserInterfaceLogic.DefaultUI(currentStage)
+function UserInterfaceLogic.UpdateStageCounter(currentStage)
 	stageCounter.StageText.Text = "Stage " .. CF.NumByCheckpoint[currentStage]
 end
 

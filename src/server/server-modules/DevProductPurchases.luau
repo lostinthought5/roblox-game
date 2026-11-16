@@ -12,7 +12,7 @@ local purchaseLogic = {
 		local nextCheckpoint = CF.CheckpointByNum[furthestNum + 1]
 		if nextCheckpoint then
 			DataStoring.UpdatePlrData(plr, nextCheckpoint.Name, nextCheckpoint.Name)
-			Spawning.CharSpawning(plr, plr.Character)
+			Spawning.SpawnCharacter(plr, plr.Character)
 
 			return Enum.ProductPurchaseDecision.PurchaseGranted
 		else
@@ -34,7 +34,7 @@ function DevProductPurchases.Purchase(receiptInfo)
 	
 end
 
-function DevProductPurchases.ConfirmSkippable(plr)
+function DevProductPurchases.PromptSkipPurchase(plr)
 	local plrData = DataStoring.ReadData(plr)
 		if not plrData then return end
 

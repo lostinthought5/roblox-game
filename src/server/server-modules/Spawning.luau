@@ -2,7 +2,7 @@ local Spawning = {}
 local DataStoring = require(script.Parent.DataStoring)
 local CF = require(game:GetService("ReplicatedStorage").CommonFunctionality)
 
-function Spawning.CharSpawning(plr, char)
+function Spawning.SpawnCharacter(plr, char)
 	local success = pcall(function()
 		local plrData = DataStoring.ReadData(plr)
 		

@@ -40,7 +40,7 @@ local screenAnimations = {
 }
 
 local previousPoint
-function VisualEffects.CheckpointLightToggle(checkpoint)
+function VisualEffects.HighlightCheckpoint(checkpoint)
 	local currentPoint = checkpoint
 	if previousPoint then
 		previousPoint.Spawner.Color = Color3.fromRGB(48, 48, 48)

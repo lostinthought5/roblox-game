@@ -8,7 +8,7 @@ local triggerSpawning = CF.ServerStorage:WaitForChild("TriggerSpawning")
 local currentPlayers = {}  -- of form userID : dataTable
 local savingFor = {}
 
-function DataStoring.AddPlayers(plr, plrData)
+function DataStoring.RecordPlayerData(plr, plrData)
 	currentPlayers[plr.UserId] = plrData
 end
 
@@ -59,7 +59,7 @@ local function repeatAttempt(plr, callback)
 	return false
 end
 
-function DataStoring.DataRetrieval(plr)
+function DataStoring.LoadData(plr)
 	local success, plrData = repeatAttempt(plr, function()
 		return plrDataStore:GetAsync(plr.UserId)
 	end)
@@ -87,13 +87,13 @@ function DataStoring.DataRetrieval(plr)
 		end
 	end
 
-	DataStoring.AddPlayers(plr, plrData)
+	DataStoring.RecordPlayerData(plr, plrData)
 	if plrData.Role then plr:SetAttribute("Role", plrData.Role) end
 	triggerSpawning:Fire(plr)
 
 end
 
-function DataStoring.DataStore(plr)  -- saves progress upon leaving
+function DataStoring.SaveData(plr)  -- saves progress upon leaving
 	if savingFor[plr.UserId] then return end
 	savingFor[plr.UserId] = true
 	
@@ -122,7 +122,7 @@ function DataStoring.EmergencySave()
 		dataToSave += 1
 		
 		task.spawn(function()  -- multithreads; handles all players simultaneously
-			DataStoring.DataStore(plr)
+			DataStoring.SaveData(plr)
 			dataToSave -= 1
 			
 		end)

@@ -16,7 +16,7 @@ clientModules.ClientComponents.Initialize()
 
 local sendVisualUpdate = CF.ReplicatedStorage:WaitForChild("SendVisualUpdate")
 sendVisualUpdate.OnClientEvent:Connect(function(checkpoint)
-	clientModules.VisualEffects.CheckpointLightToggle(checkpoint)
+	clientModules.VisualEffects.HighlightCheckpoint(checkpoint)
 end)
 
 CF.TextChatService.OnIncomingMessage = function(message)  -- engine callback
@@ -29,7 +29,7 @@ end
 
 local sendCurrentStage = CF.ReplicatedStorage:WaitForChild("SendCurrentStage")
 sendCurrentStage.OnClientEvent:Connect(function(currentStage)
-	clientModules.UserInterfaceLogic.DefaultUI(currentStage)
+	clientModules.UserInterfaceLogic.UpdateStageCounter(currentStage)
 end)
 
 local shiftLockEnabled = false

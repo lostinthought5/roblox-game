@@ -32,7 +32,7 @@ function StageShifting.ShiftStage(plr, clientRequest)
 
 		DataStoring.UpdatePlrData(plr, nil, requestedPoint.Name)
 		sendCurrentStage:FireClient(plr, requestedPoint)
-		Spawning.CharSpawning(plr, plr.Character)
+		Spawning.SpawnCharacter(plr, plr.Character)
 	end)
 
 	if not success then return end
