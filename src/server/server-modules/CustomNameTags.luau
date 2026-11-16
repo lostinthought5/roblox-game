@@ -14,6 +14,7 @@ function CustomNameTags.CreateNameTag(plr, char)
 	
 	billboard.StudsOffset = Vector3.new(0, mag + 1.75, 0)  -- hovers slightly above the head
 	billboard.Adornee = rootPart  -- to prevent GUI movement
+	billboard.Name = "CustomNameTag"  -- needed in the VisualEffects client script
 	billboard.MaxDistance = 20
 	billboard.Parent = rootPart
 	
