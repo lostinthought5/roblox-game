@@ -1,4 +1,3 @@
-local EncodingService = game:GetService("EncodingService")
 local VisualEffects = {}
 local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunctionality"))
 local GameSounds = require(script.Parent.GameSounds)
@@ -53,14 +52,16 @@ function VisualEffects.CheckpointLightToggle(checkpoint)
 
 end
 
-function VisualEffects.PopEffect(button, parentUI)
+function VisualEffects.PopEffect(button, buttonFrame, sideFrame)
 	local function scale(scaleUp)
-		local scaleUI = parentUI:FindFirstChild("UIScale")
+		local buttonFrameScale = buttonFrame:FindFirstChild("UIScale")
+		local sideFrameScale = sideFrame:FindFirstChild("UIScale")
 		local hoverSound = GameSounds.SoundEffects.ButtonHoverSound
-		if not scaleUI then return end
+		if not buttonFrameScale and not sideFrameScale then return end
 		
-		scaleUI.Scale = scaleUp and 1.15 or 1
-		if scaleUI.Scale ~= 1 then GameSounds.PlaySoundEffect(hoverSound) end
+		buttonFrameScale.Scale = scaleUp and 1.15 or 1
+		sideFrameScale.Scale = scaleUp and 1.05 or 1
+		if buttonFrameScale.Scale ~= 1 then GameSounds.PlaySoundEffect(hoverSound) end
 	end
 		
 	button.MouseEnter:Connect(function() scale(true) end)

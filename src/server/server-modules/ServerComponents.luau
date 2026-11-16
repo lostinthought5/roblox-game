@@ -1,4 +1,3 @@
-local TouchInputService = game:GetService("TouchInputService")
 local ServerComponents = {}
 
 local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunctionality"))

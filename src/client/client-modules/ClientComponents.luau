@@ -9,14 +9,28 @@ local debounce = false
 local componentLogic = {
 	["ButtonUI"] = function(button)
 		if not button:IsDescendantOf(UILogic.PlrGui) then return end
-		if button.Name == "ShiftLock" and CF.UserInputService.KeyboardEnabled then
-			button.Parent.Parent:Destroy()
+		if button.Name == "ShiftLock" and CF.UserInputService.KeyboardEnabled then 
+			local shiftFrame = button.Parent.Parent
+			local rightSideFrame = shiftFrame.Parent
+			local skipFrame = rightSideFrame.SkipFrame
+
+			shiftFrame:Destroy() -- done because keyboard users don't need the button
 			
+			rightSideFrame.Size = UDim2.new(rightSideFrame.Size.X,  -- halves the vertical sizing of the frame; also affects horizontal because of the aspect ratio
+								UDim.new(skipFrame.Size.Y.Scale / 2, rightSideFrame.Size.Y.Offset))
+			
+			rightSideFrame.UIAspectRatioConstraint.AspectRatio *= 2 -- doubles the affected horizontal
+
+			skipFrame.Size = UDim2.new(skipFrame.Size.X,  -- resets the skip frame back to its proper size
+							UDim.new(skipFrame.Size.Y.Scale * 2, skipFrame.Size.Y.Offset))
 			return
 		end
 		
 		if button:IsA("ImageButton") then
-			VE.PopEffect(button, button.Parent)
+			local buttonFrame = button.Parent
+			local sideFrame = buttonFrame.Parent.Parent
+
+			VE.PopEffect(button, buttonFrame, sideFrame)
 		end
 		
 		button.MouseButton1Click:Connect(function()

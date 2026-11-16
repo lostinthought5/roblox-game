@@ -6,7 +6,7 @@ local localPlr = game:GetService("Players").LocalPlayer
 CF.InitializeCheckpoints()
 
 local clientModules = {}
-local moduleFolder = localPlr.PlayerScripts:FindFirstChild("ClientScripts"):FindFirstChild("Modules")
+local moduleFolder = localPlr.PlayerScripts:FindFirstChild("client-modules")
 
 for _, module in moduleFolder:GetChildren() do
 	clientModules[module.Name] = require(module)	

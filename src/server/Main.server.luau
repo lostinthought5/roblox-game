@@ -7,8 +7,7 @@ local startPlrs = game:GetService("StarterPlayer")
 print(startPlrs.EnableMouseLockOption)
 
 local serverModules = {}
-local serverScripts = serverScriptService:FindFirstChild("ServerScripts")
-local moduleFolder = serverScripts:FindFirstChild("Modules")
+local moduleFolder = serverScriptService:FindFirstChild("server-modules")
 
 for _, module in moduleFolder:GetChildren() do
 	serverModules[module.Name] = require(module)
@@ -49,9 +48,7 @@ requestStageShift.OnServerEvent:Connect(function(plr, clientRequest)
 end)
 
 CF.MarketplaceService.ProcessReceipt = function(receiptInfo)
-	serverModules["DevProductPurchases"].Purchase(receiptInfo)
+	return serverModules["DevProductPurchases"].Purchase(receiptInfo)
 end
 
 game:BindToClose(serverModules["DataStoring"].EmergencySave)
-
-print("FINALLY WORKING")

@@ -13,4 +13,5 @@
 - Fix UI scaling for different devices
 - Fix settings/shop while in first person bug
 - Game permissions specific to Admin and Owner roles
+- Must disable stage skip purchasing when no further stages
 - FINAL: confirm no further bugs and optimize code

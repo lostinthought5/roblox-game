@@ -10,8 +10,6 @@ local defaultGui = localPlr:WaitForChild("PlayerGui"):FindFirstChild("DefaultGui
 local settingsGui = localPlr:WaitForChild("PlayerGui"):WaitForChild("SettingsGui")
 local shopGui = localPlr:WaitForChild("PlayerGui"):WaitForChild("ShopGui")
 
-local tweenInfo = TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-
 local settingsGuiFrame = settingsGui:WaitForChild("SettingsGuiFrame")
 local shopGuiFrame = shopGui:WaitForChild("ShopGuiFrame")
 
@@ -91,7 +89,7 @@ UserInterfaceLogic.ButtonLogic = { -- used to assign button functionality
 
 function UserInterfaceLogic.DefaultUI(currentStage)
 	stageCounter.StageText.Text = "Stage " .. CF.NumByCheckpoint[currentStage] -- could do this in a more specialized function instead
-	stageCounter.StageText.ShadowText.Text = "Stage " .. CF.NumByCheckpoint[currentStage]	
+	-- stageCounter.StageText.ShadowText.Text = "Stage " .. CF.NumByCheckpoint[currentStage]	
 end
 
 -- will change following code
