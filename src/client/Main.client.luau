@@ -41,6 +41,7 @@ sendCurrentStage.OnClientEvent:Connect(function(currentStage)
 end)
 
 local shiftLockEnabled = false
+-- game processed signifies whether the input called an engine-built mechanic, like a chat prompt
 CF.UserInputService.InputBegan:Connect(function(input, gameProcessed)
 	if not gameProcessed and input.KeyCode == Enum.KeyCode.LeftShift then
 		shiftLockEnabled = not shiftLockEnabled
