@@ -1,11 +1,11 @@
 --[[ This script is called from Main.client when the Shift key is pressed and
-to highlight current checkpoints, from the ClientComponents script when 
-from ClientComponents to assign the PopEffect function to UI buttons, and from
-the UserInterfaceLogic script for all other functions. 
+to highlight current checkpoints, from the ClientComponents script to assign 
+the PopEffect function to UI buttons, and from the UserInterfaceLogic script 
+for all other functions. 
 
 It handles the GUI open/close animations and their animated border gradient, 
 checkpoint lighting and player hiding, and the custom shift lock feature, which 
-locks the player's camera to their mouse. ]]
+forces the player's camera to move with their mouse. ]]
 
 local VisualEffects = {}
 local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunctionality"))
