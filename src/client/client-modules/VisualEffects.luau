@@ -1,3 +1,12 @@
+--[[ This script is called from Main.client when the Shift key is pressed and
+to highlight current checkpoints, from the ClientComponents script when 
+from ClientComponents to assign the PopEffect function to UI buttons, and from
+the UserInterfaceLogic script for all other functions. 
+
+It handles the GUI open/close animations and their animated border gradient, 
+checkpoint lighting and player hiding, and the custom shift lock feature, which 
+locks the player's camera to their mouse. ]]
+
 local VisualEffects = {}
 local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunctionality"))
 local GameSounds = require(script.Parent.GameSounds)
@@ -5,7 +14,7 @@ local currentCam = workspace.CurrentCamera
 local localPlr = CF.Players.LocalPlayer
 
 local blurEffect = game:GetService("Lighting"):WaitForChild("BlurEffect")
-local cameraOffset = Instance.new("Vector3Value")
+local cameraOffset = Instance.new("Vector3Value") -- reference to be animated in shift locking
 
 VisualEffects.GuiStartPosition = UDim2.new(-0.5 ,0 ,0.5 ,0)
 VisualEffects.GuiEndPosition = UDim2.new(0.5, 0, 0.5, 0)
@@ -14,7 +23,7 @@ local animationInfo = {
 	["Default"] = TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
 	["Fov"] = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
 	["ShiftLock"] = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
-	["GradientUI"] = TweenInfo.new(2, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, false, 0),
+	["GradientUI"] = TweenInfo.new(2, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, false, 0), -- the -1 loops the animation
 }
 
 local screenAnimations = {
@@ -125,7 +134,7 @@ function VisualEffects.HidePlayer(char, isEnabled)
 	end)
 end
 
-VisualEffects.LockActive = false
+VisualEffects.LockActive = false -- this is to tell Main.client if shift lock should be applied on character respawn
 function VisualEffects.ShiftLock(shiftLockEnabled)
 	local function lock(rootPart, humanoid)
 		local function updateCam()
@@ -145,11 +154,12 @@ function VisualEffects.ShiftLock(shiftLockEnabled)
 					rootPart.CFrame = CFrame.lookAt(rootPart.Position, rootPart.Position + flatLook)
 				end
 
-			else
+			else  -- begins unlocking 
+				-- render step runs until the offset tween reaches the default (0, 0, 12),
 				local distanceToTarget = (cameraOffset.Value - Vector3.new(0, 0, 12)).Magnitude
 				if distanceToTarget < 0.1 then
 					CF.RunService:UnbindFromRenderStep("UpdateCamera")
-					cameraOffset.Value = Vector3.zero  -- reset for the next toggle
+					cameraOffset.Value = Vector3.zero  -- reset for the next shift toggle
 					return	
 				end
 			end
@@ -157,19 +167,19 @@ function VisualEffects.ShiftLock(shiftLockEnabled)
 		
 		CF.UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
 		CF.UserInputService.MouseIconEnabled = false
-		humanoid.AutoRotate = false  -- property forces char to face direction they walk towards
+		humanoid.AutoRotate = false  -- property forces char to face direction they walk towards; true by default
 		
 		local headHeight = rootPart.Position + Vector3.new(0, 1.5, 0)
 		localPlr.CameraMinZoomDistance = 2
 		
-		local camDistance = (currentCam.CFrame.Position - headHeight).Magnitude
+		local camDistance = (currentCam.CFrame.Position - headHeight).Magnitude  -- constant
 		cameraOffset.Value = Vector3.new(0, 0, camDistance)
 		
 		local shiftAnimation = screenAnimations.ShiftLockAnimation(Vector3.new(1.75, 0, 10))
 		shiftAnimation:Play()
 		
-		local priority = Enum.RenderPriority.Camera.Value + 1
-		CF.RunService:BindToRenderStep("UpdateCamera", priority, updateCam)
+		local priority = Enum.RenderPriority.Camera.Value + 1  -- to ovveride engine
+		CF.RunService:BindToRenderStep("UpdateCamera", priority, updateCam) -- calls updateCam at every rendered frame
 	end
 	
 	local function unlock(humanoid)
@@ -177,7 +187,7 @@ function VisualEffects.ShiftLock(shiftLockEnabled)
 		CF.UserInputService.MouseIconEnabled = true
 		humanoid.AutoRotate = true
 		
-		-- forces max and min zooming to 12 studs
+		-- forces max and min zooming to 12 studs; restored after 0.25 secs
 		localPlr.CameraMinZoomDistance = 12
 		localPlr.CameraMaxZoomDistance = 12
 

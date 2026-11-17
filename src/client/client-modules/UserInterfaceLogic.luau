@@ -1,3 +1,8 @@
+--[[ This script is called by Main.client to update the player's stage counter, 
+and by the ClientComponents to assign further logic to specific UI components. It
+animates GUI, makes requests to the server, and calls functions from the VisualEffects
+script. ]]
+
 local UserInterfaceLogic = {}
 
 local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunctionality"))
@@ -38,6 +43,7 @@ UserInterfaceLogic.ButtonLogic = {
 		end,
 		
 		["NextButton"] = function()
+			-- requests from the server to shift stage
 			requestStageShift:FireServer("nextRequest")
 		end,
 		
@@ -49,8 +55,7 @@ UserInterfaceLogic.ButtonLogic = {
 			requestStageSkip:FireServer()
 		end,
 		
-		["ShiftLock"] = function()
-			shiftLockEnabled = not shiftLockEnabled
+		["ShiftLock"] = function() -- button for touch devices; immediately deleted for keyboard players (usual to press the shift key instead)
 			VisualEffects.ShiftLock(shiftLockEnabled)
 		end,
 	},

@@ -1,3 +1,8 @@
+--[[ This script is called from Main.server immediately. It defines
+the logic for each special in-game component, like checkpoints and
+moving platforms. The checkpoint logic calls the DataStoring script for
+updating player data. ]]
+
 local ServerComponents = {}
 
 local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunctionality"))
@@ -84,6 +89,11 @@ local componentLogic = {
 		task.spawn(function()
 			while true do
 				local function movePlatform(moveForward)
+
+					--[[ A velocity is manually calculated and applied to the platform because tweening
+					it is not considered movement by the engine. The velocity is then applied to the player
+					so that it simulates a moving platform. ]]
+
 					platform.AssemblyLinearVelocity = moveForward and forwardVelocity or backwardVelocity
 					local tween = moveForward and forwardTween or backwardTween
 					tween:Play()

@@ -1,3 +1,9 @@
+--[[ This script acts as the main client, calling module scripts from 
+client-modules/ when needed. It mostly handles visuals and UI, though it
+contains some logic related to the ShiftLock function in the VisualEffects
+script. It also calls the CommonFunctionality script like its counterpart
+Main.server ]]
+
 -- below disables default health bar GUI
 game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.Health, false)
 
@@ -19,10 +25,12 @@ sendVisualUpdate.OnClientEvent:Connect(function(checkpoint)
 	clientModules.VisualEffects.HighlightCheckpoint(checkpoint)
 end)
 
-CF.TextChatService.OnIncomingMessage = function(message)  -- engine callback
+-- engine callback which displays returned value in-chat
+CF.TextChatService.OnIncomingMessage = function(message)
 	return clientModules.ChatCustomization.Restructure(message, "ChatMessage")
 end
 
+-- engine callback which displays a text bubble above a player's head
 CF.TextChatService.OnBubbleAdded = function(message)
 	return clientModules.ChatCustomization.Restructure(message, "TextBubble")
 end

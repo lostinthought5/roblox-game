@@ -1,3 +1,6 @@
+--[[ This script is called by Main.server when a player joins. It replaces
+Roblox's own nametags with a personalized one matching the player's role. ]]
+
 local CustomNameTags = {}
 local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunctionality"))
 

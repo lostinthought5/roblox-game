@@ -1,3 +1,8 @@
+--[[ This script acts as the main server, calling module scripts from 
+server-modules/ when certain actions are needed, such as loading and saving 
+data. Also calls the CommonFunctionality script from shared/ to handle
+checkpont-based hashmaps. ]]
+
 local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunctionality"))
 CF.InitializeCheckpoints()
 
@@ -43,6 +48,7 @@ requestStageShift.OnServerEvent:Connect(function(plr, clientRequest)
 	serverModules.StageShifting.ShiftStage(plr, clientRequest)
 end)
 
+-- This is an engine function that expects an Enum decision to return to Roblox servers
 CF.MarketplaceService.ProcessReceipt = function(receiptInfo)
 	return serverModules.DevProductPurchases.Purchase(receiptInfo)
 end

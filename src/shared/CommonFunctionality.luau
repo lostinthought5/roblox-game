@@ -1,3 +1,9 @@
+--[[ This script is called from both the server and client scripts. It
+defines variables and logic that is used often across different scripts,
+most notably the hashmaps CheckpointByName, CheckpointByNum, and
+NumByCheckpoint. The client and server both store their own copy of this 
+script. ]]
+
 local CommonFunctionality = {}
 
 CommonFunctionality.TweenService = game:GetService("TweenService")
@@ -77,7 +83,7 @@ local function registerCheckpoint(checkpoint)
 	end
 end
 
-function CommonFunctionality.InitializeCheckpoints()  -- must run twice if ran on both server and client
+function CommonFunctionality.InitializeCheckpoints()
 	local checkpoints = CommonFunctionality.CollectionService:GetTagged("Checkpoint")
 	
 	for i, checkpoint in checkpoints do

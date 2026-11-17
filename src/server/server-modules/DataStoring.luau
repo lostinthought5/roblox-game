@@ -1,3 +1,8 @@
+--[[ This script is called from Main.server. It loads and saves player
+data with safeguards in place. It also saves a hashmap of in-game players and
+their data for easy access by the server and easy updating. It uses Roblox's
+own database system. ]]
+
 local DataStoring = {}
 
 local dataStoreService = game:GetService("DataStoreService")

@@ -1,7 +1,13 @@
+--[[ This script is immediately called by Main.client. It defines universal logic
+for client-side UI and client-based objects such as bounce pads. UI elements with
+the ButtonUI tag are menu buttons, whereas those with ToggleUI are toggles in
+the Settings GUI. UI-specific logic does not reside here, it resides in the
+UserInterfaceLogic script. ]]
+
 local ClientComponents = {}
 local CF = require(game:GetService("ReplicatedStorage"):WaitForChild("CommonFunctionality"))
 local UILogic = require(script.Parent.UserInterfaceLogic)
-local VE = require(script.Parent.VisualEffects)
+local VisualEffects = require(script.Parent.VisualEffects)
 local GameSounds = require(script.Parent.GameSounds)
 local localPlr = CF.Players.LocalPlayer
 local debounce = false
@@ -30,7 +36,7 @@ local componentLogic = {
 			local buttonFrame = button.Parent
 			local sideFrame = buttonFrame.Parent.Parent
 
-			VE.PopEffect(button, buttonFrame, sideFrame)
+			VisualEffects.PopEffect(button, buttonFrame, sideFrame)
 		end
 		
 		button.MouseButton1Click:Connect(function()
@@ -120,8 +126,8 @@ function ClientComponents.Initialize()
 	for tag, logic in pairs(componentLogic) do 
 		local components = CF.CollectionService:GetTagged(tag)
 
-		for _, component in components do  -- should still be constant time
-			task.spawn(logic, component)
+		for _, component in components do
+			task.spawn(logic, component)  -- multithreads here
 		end 
 
 		CF.CollectionService:GetInstanceAddedSignal(tag):Connect(logic)

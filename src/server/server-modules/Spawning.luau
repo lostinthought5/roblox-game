@@ -1,3 +1,7 @@
+--[[ This script is called from Main.server when the player joins
+the game or dies. It spawns the player character at the stage they
+were on previously. ]]
+
 local Spawning = {}
 local DataStoring = require(script.Parent.DataStoring)
 local CF = require(game:GetService("ReplicatedStorage").CommonFunctionality)

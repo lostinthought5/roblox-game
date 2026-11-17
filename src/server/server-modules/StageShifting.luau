@@ -1,3 +1,7 @@
+--[[ This script is called from Main.server when the client requests
+moving a checkpoint forward or backward. It shifts the player to the
+next or previous checkpoint if it exists, by calling the Spawning script. ]]
+
 local StageShifting = {}
 
 local CF = require(game:GetService("ReplicatedStorage").CommonFunctionality)
