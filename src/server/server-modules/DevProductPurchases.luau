@@ -1,7 +1,7 @@
 --[[ This script is called from Main.server when a potential in-game
 purchase occurs. It confirms the purchase is possible first. Enum decisions
-NotProcessedYet and PurchaseGranted mean that a purchase went through but
-is invalid (refunded after some time), and that it was successfully granted, 
+NotProcessedYet and PurchaseGranted mean that a requested purchase did not
+process and will reattempt later, and that it was successfully granted, 
 respectively. ]]
 
 local DevProductPurchases = {}
