@@ -56,6 +56,7 @@ UserInterfaceLogic.ButtonLogic = {
 		end,
 		
 		["ShiftLock"] = function() -- button for touch devices; immediately deleted for keyboard players (usual to press the shift key instead)
+			shiftLockEnabled = not shiftLockEnabled
 			VisualEffects.ShiftLock(shiftLockEnabled)
 		end,
 	},
