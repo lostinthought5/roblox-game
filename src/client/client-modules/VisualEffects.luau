@@ -66,7 +66,7 @@ function VisualEffects.PopEffect(button, buttonFrame, sideFrame)
 		local buttonFrameScale = buttonFrame:FindFirstChild("UIScale")
 		local sideFrameScale = sideFrame:FindFirstChild("UIScale")
 		local hoverSound = GameSounds.SoundEffects.ButtonHoverSound
-		if not buttonFrameScale and not sideFrameScale then return end
+		if not (buttonFrameScale and sideFrameScale) then return end
 
 		local DEFAULT_SCALE_VALUE = 1 
 		
