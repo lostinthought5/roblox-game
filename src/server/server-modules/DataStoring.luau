@@ -47,15 +47,15 @@ local defaultData = {  -- more keys may be added
 
 local function repeatAttempt(plr, callback)
 	local MAX = 3
-	local attempt = 0
 
-	for i = attempt, MAX do
+	for attempt = 1, MAX do
 		local success, plrData = pcall(callback)
 
 		if success then
 			return true, plrData
 		end
 		
+		warn("FAILED TO SAVE/FETCH DATA FOR" .. plr.UserId)
 		if attempt < MAX then  -- to minimize waiting time
 			task.wait(2)
 		end
