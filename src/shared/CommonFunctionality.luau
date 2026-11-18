@@ -73,7 +73,7 @@ CommonFunctionality.CheckpointByNum = {}
 CommonFunctionality.NumByCheckpoint = {}
 
 local function registerCheckpoint(checkpoint)
-	local stageNum = tonumber(string.match(checkpoint.Name, "%d+"))
+	local stageNum = tonumber(string.match(checkpoint.Name, "%d+"))  -- finds the first sequence of numbers
 
 	if stageNum then
 		CommonFunctionality.CheckpointByName[checkpoint.Name] = checkpoint
