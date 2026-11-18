@@ -133,7 +133,8 @@ function DataStoring.EmergencySave()
 		end)
 	end
 	
-	while dataToSave > 0 do  -- necessary, for loop above runs instantaneously
+	-- while loop necessary for server to remain active, for loop above runs instantaneously
+	while dataToSave > 0 or next(savingFor) ~= nil do  -- checks whether savingFor is empty
 		task.wait(0.5)
 	end
 end
